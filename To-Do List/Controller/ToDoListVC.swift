@@ -11,11 +11,12 @@ import IBAnimatable
 
 class ToDoListVC: UIViewController {
     @IBOutlet weak var todoTableView: UITableView!
-    @IBOutlet weak var newTaskTF: UITextField!
     @IBOutlet weak var popUpView: UIVisualEffectView!
+    @IBOutlet weak var editPopUp: EditPopUp!
     
     let toDo = RealmData.Tasks()
     let aniDuration = 0.7
+    var taskEdit: toDoList?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,27 +37,25 @@ class ToDoListVC: UIViewController {
     @IBAction func addBut(_ sender: AnimatableView) {
         UIView.animate(withDuration: aniDuration) {
             self.popUpView.alpha = 1
-            
         }
     }
     
-    @IBAction func doneBut(_ sender: AnimatableView) {
-        RealmData.addTask(text: newTaskTF.text!)
-        reloadData()
-        showNotificationBannerSwift(bannerTitle: "Task Added", bannerStyle: .success)
-        UIView.animate(withDuration: aniDuration) {
-            self.popUpView.alpha = 0
-        }
-        newTaskTF.text = ""
-    }
+//    @IBAction func doneBut(_ sender: AnimatableView) {
+//        RealmData.addTask(text: newTaskTF.text!)
+//        reloadData()
+//        showNotificationBannerSwift(bannerTitle: "Task Added Sucessfully", bannerStyle: .success)
+//        UIView.animate(withDuration: aniDuration) {
+//            self.popUpView.alpha = 0
+//        }
+//        newTaskTF.text = ""
+//    }
     
-    @IBAction func canselBut(_ sender: AnimatableView) {
-        UIView.animate(withDuration: aniDuration) {
-            self.popUpView.alpha = 0
-            self.newTaskTF.text = ""
-        }
-    }
-    
+//    @IBAction func canselBut(_ sender: AnimatableView) {
+//        UIView.animate(withDuration: aniDuration) {
+////            self.popUpView.alpha = 0
+////            self.newTaskTF.text = ""
+//        }
+//    }
 }
 
 extension ToDoListVC: UITableViewDataSource {
@@ -68,7 +67,6 @@ extension ToDoListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = todoTableView.dequeueReusableCell(withIdentifier: "Cell") as! CellDetails
         let taskCellText = toDo[indexPath.row].toDoText
-//        let taskCellStatus = toDo[indexPath.row].isDone
         cell.configureCell(textCell: taskCellText)
         return cell
     }
@@ -85,6 +83,13 @@ extension ToDoListVC: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIView.animate(withDuration: aniDuration) {
+            self.popUpView.alpha = 1
+        }
+        taskEdit = toDo[indexPath.row]
+        editPopUp.editTodoItem(item: taskEdit!)
+    }
 }
 
 extension ToDoListVC: UITableViewDelegate {

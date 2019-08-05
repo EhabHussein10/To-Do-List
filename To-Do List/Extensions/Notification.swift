@@ -15,3 +15,10 @@ extension UIViewController {
         banner.show()
     }
 }
+
+extension UIView {
+    func showNotificationBannerSwift(bannerTitle: String, bannerStyle: BannerStyle){
+        let banner = StatusBarNotificationBanner(title: bannerTitle, style: bannerStyle)
+        banner.show()
+    }
+}

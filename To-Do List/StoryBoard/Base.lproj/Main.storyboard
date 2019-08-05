@@ -38,7 +38,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-LL-8FB">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-LL-8FB" customClass="EditPopUp" customModule="To_Do_List" customModuleProvider="target">
                                             <rect key="frame" x="8" y="120" width="398" height="360"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Insert Your Task here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d1M-Oy-2Fk">
@@ -71,7 +71,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
-                                                                <action selector="canselBut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="L1r-4h-Tz3"/>
+                                                                <action selector="canselAction:" destination="PeD-LL-8FB" eventType="touchUpInside" id="CcW-h0-agm"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVD-DD-S18" customClass="AnimatableButton" customModule="IBAnimatable">
@@ -89,7 +89,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
-                                                                <action selector="doneBut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SL3-c3-K07"/>
+                                                                <action selector="doneAction:" destination="PeD-LL-8FB" eventType="touchUpInside" id="KRW-Sv-mrM"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -106,6 +106,9 @@
                                                 <constraint firstItem="waX-Dv-Oc7" firstAttribute="leading" secondItem="PeD-LL-8FB" secondAttribute="leading" constant="50" id="XyF-A7-Kmo"/>
                                                 <constraint firstItem="waX-Dv-Oc7" firstAttribute="top" secondItem="d1M-Oy-2Fk" secondAttribute="bottom" constant="50" id="tb3-6s-UTq"/>
                                             </constraints>
+                                            <connections>
+                                                <outlet property="newTaskField" destination="d1M-Oy-2Fk" id="B4L-cW-suX"/>
+                                            </connections>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -140,7 +143,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="newTaskTF" destination="d1M-Oy-2Fk" id="Jcy-ym-11W"/>
+                        <outlet property="editPopUp" destination="PeD-LL-8FB" id="icg-Hi-reE"/>
                         <outlet property="popUpView" destination="ovl-2z-hto" id="aba-k8-7UQ"/>
                         <outlet property="todoTableView" destination="00c-o7-f5S" id="AbY-zI-gk9"/>
                     </connections>
