@@ -9,7 +9,12 @@
 import UIKit
 import IBAnimatable
 
-class ToDoListVC: UIViewController {
+protocol toDoListproperties {
+    func properties(isDone:Bool)
+}
+
+class ToDoListVC: UIViewController, toDoListproperties {
+    
     @IBOutlet weak var todoTableView: UITableView!
     @IBOutlet weak var popUpView: UIVisualEffectView!
     @IBOutlet weak var editPopUp: EditPopUp!
@@ -40,22 +45,12 @@ class ToDoListVC: UIViewController {
         }
     }
     
-//    @IBAction func doneBut(_ sender: AnimatableView) {
-//        RealmData.addTask(text: newTaskTF.text!)
-//        reloadData()
-//        showNotificationBannerSwift(bannerTitle: "Task Added Sucessfully", bannerStyle: .success)
-//        UIView.animate(withDuration: aniDuration) {
-//            self.popUpView.alpha = 0
-//        }
-//        newTaskTF.text = ""
-//    }
-    
-//    @IBAction func canselBut(_ sender: AnimatableView) {
-//        UIView.animate(withDuration: aniDuration) {
-////            self.popUpView.alpha = 0
-////            self.newTaskTF.text = ""
-//        }
-//    }
+    func properties(isDone: Bool) {
+        reloadData()
+        UIView.animate(withDuration: aniDuration) {
+            self.popUpView.alpha = 0
+        }
+    }
 }
 
 extension ToDoListVC: UITableViewDataSource {

@@ -11,7 +11,7 @@ import RealmSwift
 
 class RealmData: Object {
     
-    class func addTask(text: String) {
+class func addTask(text: String) {
 
         let realm = try! Realm()
         try! realm.write {
@@ -21,8 +21,6 @@ class RealmData: Object {
             todo.isDone = false
             realm.add(todo, update: true)
         }
-    
-//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         func incrementID() -> Int {
             let realm = try! Realm()
@@ -30,7 +28,7 @@ class RealmData: Object {
         }
     }
     
-    class func editTask(task: toDoList, updatedText: String, updatedStatus: Bool) {
+class func editTask(task: toDoList, updatedText: String, updatedStatus: Bool) {
         
         let realm = try! Realm()
         try! realm.write {
@@ -39,14 +37,14 @@ class RealmData: Object {
         }
     }
     
-    class func Tasks() -> Results<toDoList> {
+class func Tasks() -> Results<toDoList> {
         
         let realm = try! Realm()
         let tasks = realm.objects(toDoList.self)
         return tasks
     }
     
-    class func deleteTask(task: toDoList) {
+class func deleteTask(task: toDoList) {
         
         let realm = try! Realm()
         try! realm.write {
