@@ -1,19 +1,20 @@
 //
-//  EditPopUp.swift
+//  EditingPopUpViewController.swift
 //  To-Do List
 //
-//  Created by Mac on 8/5/19.
+//  Created by Ehab Eletreby on 8/5/19.
 //  Copyright © 2019 Ehab Eletreby. All rights reserved.
 //
 
 import UIKit
 import IBAnimatable
 
-class EditPopUp: UIView {
+class EditingPopUpViewController: UIView {
     @IBOutlet weak var newTaskField: UITextField!
     
     var toDoList: toDoListproperties!
     var todoItem: toDoList?
+    var delegate: EditPopupState!
     
     init() {
         super.init(frame: toDoList as! CGRect)
@@ -28,20 +29,23 @@ class EditPopUp: UIView {
         if todoItem != nil {
             RealmData.editTask(task: todoItem!, updatedText: newTaskField.text!, updatedStatus: true)
             showNotificationBannerSwift(bannerTitle: "Task Edited Successfully", bannerStyle: .success)
+            delegate.hideEdit()
         } else {
             RealmData.addTask(text: newTaskField.text!)
-            self.toDoList.properties(isDone: true)
+            self.toDoList.getProperties(isDone: true)
             showNotificationBannerSwift(bannerTitle: "Task Added Successfully", bannerStyle: .success)
             newTaskField.text = ""
         }
     }
     
-    @IBAction func canselAction(_ sender: AnimatableView) {
-        self.toDoList.properties(isDone: true)
+    @IBAction func cancelAction(_ sender: AnimatableView) {
+        self.toDoList.getProperties(isDone: true)
         newTaskField.text = ""
     }
     
     func editTodoItem(item: toDoList) {
-        
+        print(item.toDoText)
+        newTaskField.text = item.toDoText
+        todoItem = item
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ToDoListViewController.swift
 //  To-Do List
 //
 //  Created by Ehab Eletreby on 7/28/19.
@@ -10,14 +10,18 @@ import UIKit
 import IBAnimatable
 
 protocol toDoListproperties {
-    func properties(isDone:Bool)
+    func getProperties(isDone:Bool)
 }
 
-class ToDoListVC: UIViewController, toDoListproperties {
+protocol EditPopupState {
+    func hideEdit()
+}
+
+class ToDoListViewController: UIViewController, toDoListproperties, EditPopupState {
     
     @IBOutlet weak var todoTableView: UITableView!
     @IBOutlet weak var popUpView: UIVisualEffectView!
-    @IBOutlet weak var editPopUp: EditPopUp!
+    @IBOutlet weak var editPopUp: EditingPopUpViewController!
     
     let toDo = RealmData.Tasks()
     let aniDuration = 0.7
@@ -28,6 +32,7 @@ class ToDoListVC: UIViewController, toDoListproperties {
         
         todoTableView.delegate = self
         todoTableView.dataSource = self
+        editPopUp.toDoList = self
         
         let projectCellNibFile = UINib(nibName: "CellDetails", bundle: nil)
         todoTableView.register(projectCellNibFile, forCellReuseIdentifier: "Cell")
@@ -45,7 +50,14 @@ class ToDoListVC: UIViewController, toDoListproperties {
         }
     }
     
-    func properties(isDone: Bool) {
+    func hideEdit() {
+        reloadData()
+        UIView.animate(withDuration: aniDuration) {
+            self.popUpView.alpha = 0
+        }
+    }
+    
+    func getProperties(isDone: Bool) {
         reloadData()
         UIView.animate(withDuration: aniDuration) {
             self.popUpView.alpha = 0
@@ -53,7 +65,7 @@ class ToDoListVC: UIViewController, toDoListproperties {
     }
 }
 
-extension ToDoListVC: UITableViewDataSource {
+extension ToDoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDo.count
@@ -83,10 +95,11 @@ extension ToDoListVC: UITableViewDataSource {
             self.popUpView.alpha = 1
         }
         taskEdit = toDo[indexPath.row]
+        editPopUp.delegate = self
         editPopUp.editTodoItem(item: taskEdit!)
     }
 }
 
-extension ToDoListVC: UITableViewDelegate {
+extension ToDoListViewController: UITableViewDelegate {
     
 }
